@@ -3,8 +3,10 @@ package com.user.session.controller;
 
 import com.user.session.model.Usuario;
 import com.user.session.repository.UsuarioRepository;
+import com.user.session.service.UserSignin;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,6 +19,15 @@ public class AuthController {
 
     @Autowired
     private UsuarioRepository usuarioRepository;
+
+    @Autowired
+    private UserSignin userSignin;
+
+    @PostMapping("/cadastro")
+    public ResponseEntity<Usuario> cadastro(@RequestBody Usuario usuario) {
+        Usuario user = userSignin.criar(usuario);
+        return ResponseEntity.status(HttpStatus.CREATED).body(user);
+    }
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody Map<String, String> loginData, HttpSession session) {
