@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dashboard - AbacatePay</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f2f2f2;
+    }
+    header {
+      background-color: #7ED957;
+      color: white;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    header h1 {
+      font-size: 1.5rem;
+    }
+    button {
+      background-color: white;
+      color: #7ED957;
+      border: 2px solid white;
+      padding: 0.5rem 1rem;
+      font-weight: bold;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    button:hover {
+      background-color: #f4f4f4;
+    }
+    main {
+      padding: 2rem;
+    }
+    .box {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 12px;
+      box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Dashboard - AbacatePay</h1>
+    <button onclick="logout()">Sair</button>
+  </header>
+
+  <main>
+    <div class="box">
+      <h2>Bem-vindo(a)!</h2>
+      <p>Seu login foi feito com sucesso. Aqui você poderá ver as opções de pagamento e acompanhar transações.</p>
+    </div>
+  </main>
+
+  <script>
+  // Faz uma chamada autenticada para verificar sessão
+  fetch("http://localhost:8080/auth/me", {
+    method: "GET",
+    credentials: "include" // ENVIA o cookie de sessão!
+  })
+    .then(resp => {
+      if (!resp.ok) {
+        // Se não tiver sessão, volta pro login
+        window.location.href = "login.html";
+      } else {
+        return resp.json();
+      }
+    })
+    .then(data => {
+      if (data) {
+        document.querySelector(".box h2").innerText = `Bem-vindo(a), ${data.nome}!`;
+      }
+    })
+    .catch(() => {
+      window.location.href = "login.html";
+    });
+
+  function logout() {
+    fetch("http://localhost:8080/auth/logout", {
+      method: "POST",
+      credentials: "include"
+    }).then(() => {
+      window.location.href = "login.html";
+    });
+  }
+</script>
+
+
+</body>
+</html>
+
