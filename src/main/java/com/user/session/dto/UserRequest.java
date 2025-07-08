@@ -1,29 +1,29 @@
-package com.user.session.model;
+package com.user.session.dto;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
-@Entity
-@Table(name = "users")
-public class Usuario {
+public class UserRequest {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
+    @NotBlank(message = "O nome é obrigatório")
     private String name;
+
+    @NotBlank(message = "O sobrenome é obrigatório")
     private String lastname;
+
+    @NotBlank(message = "A senha é obrigatória")
+    @Size(min = 8, message = "A senha deve ter no mínimo 8 caracteres")
     private String password;
+
+    @NotBlank(message = "O telefone é obrigatório")
     private String cellphone;
+
+
+    public UserRequest() {}
 
     // Getters e Setters
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;
@@ -36,7 +36,6 @@ public class Usuario {
     public String getLastname() {
         return lastname;
     }
-
     public void setLastname(String lastname) {
         this.lastname = lastname;
     }
@@ -44,7 +43,6 @@ public class Usuario {
     public String getPassword() {
         return password;
     }
-
     public void setPassword(String password) {
         this.password = password;
     }
@@ -52,7 +50,6 @@ public class Usuario {
     public String getCellphone() {
         return cellphone;
     }
-
     public void setCellphone(String cellphone) {
         this.cellphone = cellphone;
     }

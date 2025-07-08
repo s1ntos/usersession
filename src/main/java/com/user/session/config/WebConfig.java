@@ -13,9 +13,9 @@ public class WebConfig {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
-                        .allowedOrigins("http://127.0.0.1:5500")
-                        .allowedMethods("GET", "POST", "OPTIONS")
-                        .allowCredentials(true); // FUNDAMENTAL para sessão funcionar!
+                        .allowedOrigins("http://localhost:5173")
+                        .allowedMethods("POST")
+                        .allowCredentials(true); // Fundamental para sessão funcionar
             }
         };
     }
