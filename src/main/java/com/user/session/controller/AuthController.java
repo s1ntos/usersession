@@ -1,6 +1,7 @@
 package com.user.session.controller;
 
 import com.user.session.dto.UserRequest;
+import com.user.session.mapper.UserMapper;
 import com.user.session.model.Usuario;
 import com.user.session.service.UserSignin;
 import jakarta.validation.Valid;
@@ -17,12 +18,7 @@ public class AuthController {
 
     @PostMapping("/cadastro")
     public ResponseEntity<Usuario> cadastro(@RequestBody @Valid UserRequest dto) {
-        Usuario user = new Usuario();
-        user.setName(dto.getName());
-        user.setLastname(dto.getLastname());
-        user.setPassword(dto.getPassword());
-        user.setCellphone(dto.getCellphone());
-
+        Usuario user = UserMapper.toEntity(dto);
         return ResponseEntity.status(HttpStatus.CREATED).body(userSignin.criar(user));
     }
 }
